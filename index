@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Upgrade Dashboard</title>
+    <title>Urgent Consult Dashboard</title>
     <style>
         :root {
             --primary-color: #004d99; /* Blu scuro per lo sfondo dei pulsanti */
@@ -151,8 +151,8 @@
 <body>
 
 <header class="page-header">
-    <img src="logoet.png" alt="Logo Euro Team" class="header-logo">
-    <span class="header-text">Accesso rigorosamente riservato al collaboratori Euro Team b2b Services</span>
+    <img src="urgent_logo.png" alt="Logo Urgent Consult" class="header-logo">
+    <span class="header-text">Acces strict rezervat colaboratorilor Euro Team b2b Services</span>
 </header>
 
     <main class="main-content">
