@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urgent Consult - Dashboard by AF</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #004d99; /* Blu scuro per lo sfondo dei pulsanti */
+            --primary-light: #3a7bb9;
             --secondary-color: #ff8c00; /* Arancione per l'effetto hover */
+            --accent-color: #00a8ff;
             --text-color: #ffffff; /* Testo bianco sui pulsanti */
             --background-color: #f0f4f8; /* Sfondo generale */
-            --border-radius: 10px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --card-color: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -24,30 +33,44 @@
             min-height: 100vh;
             background-color: var(--background-color);
             color: #333;
+            line-height: 1.6;
         }
 
         /* Stili Header */
         .page-header {
             background-color: #ffffff;
-                                /*var(--primary-color);*/
-            /*color: #a18c30);*/
-                                color: var(--primary-color);
+            color: var(--primary-color);
             padding: 15px 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             box-shadow: var(--box-shadow);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .header-logo {
-            height: 40px; /* Adatta l'altezza del logo se necessario */
+            height: 40px;
+            transition: var(--transition);
+        }
+
+        .header-logo:hover {
+            transform: scale(1.05);
         }
 
         .header-text {
-            font-size: 1 em;
+            font-size: 0.9em;
             font-weight: 500;
-            text-align: left;
-            margin-left: auto;
+            padding: 8px 15px;
+            background-color: rgba(0, 77, 153, 0.1);
+            border-radius: 20px;
+            border-left: 3px solid var(--secondary-color);
         }
 
         /* Stili Contenuto Principale */
@@ -56,82 +79,103 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 30px 20px;
         }
-        /*Container centrale*/
+
+        /* Container centrale */
         .dashboard-container {
-            background: #86b4cf;
+            background: linear-gradient(135deg, #86b4cf 0%, #6a9dc0 100%);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            padding: 40px;
+            padding: 50px 40px;
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
         }
 
         h1 {
             color: var(--primary-color);
-            font-size: 2.5em;
-            margin-bottom: 5px;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         p.subtitle {
             color: #ffffff;
-            font-size: 1.2em;
+            font-size: 1.3em;
             margin-top: 0;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             margin-top: 30px;
         }
 
         .dashboard-button {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            padding: 20px;
+            padding: 22px 25px;
             background-color: var(--primary-color);
             color: var(--text-color);
             text-decoration: none;
             border-radius: var(--border-radius);
-            font-weight: bold;
+            font-weight: 600;
             font-size: 1.1em;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            transition: var(--transition);
             box-shadow: var(--box-shadow);
             position: relative;
             overflow: hidden;
+            text-align: left;
+            gap: 15px;
         }
 
         .dashboard-button::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 140, 0, 0.3); /* Arancione semitrasparente */
-            border-radius: 50%;
-            transition: width 0.4s ease-in-out, height 0.4s ease-in-out, opacity 0.4s ease-in-out;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            z-index: 0;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
         }
 
         .dashboard-button:hover::before {
-            width: 250%;
-            height: 250%;
-            opacity: 1;
+            left: 100%;
         }
         
         .dashboard-button:hover {
             transform: translateY(-5px);
-            background-color: #0059b3;
+            background-color: var(--primary-light);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
-        
+
+        .button-icon {
+            font-size: 1.5em;
+            width: 30px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
         .button-text {
             position: relative;
             z-index: 1;
@@ -142,17 +186,88 @@
             background-color: var(--primary-color);
             color: white;
             text-align: center;
-            padding: 15px;
+            padding: 20px;
             font-size: 0.9em;
-            box-shadow: var(--box-shadow);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-copyright {
+            font-weight: 500;
+        }
+
+        .footer-address {
+            opacity: 0.8;
+            font-size: 0.85em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .header-left {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .header-text {
+                font-size: 0.8em;
+                text-align: center;
+                width: 100%;
+                margin-top: 5px;
+            }
+            
+            .dashboard-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            p.subtitle {
+                font-size: 1.1em;
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            
+            .dashboard-button {
+                padding: 18px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .dashboard-button {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
 
 <header class="page-header">
-    <img src="urgent_logo.png" alt="Logo Urgent Consult" class="header-logo">
-    <span class="header-text">Acces strict rezervat colaboratorilor Euro Team b2b Services</span>
+    <div class="header-left">
+        <img src="urgent_logo.png" alt="Logo Urgent Consult" class="header-logo">
+    </div>
+    <div class="header-text">Acces strict rezervat colaboratorilor Euro Team b2b Services</div>
 </header>
 
     <main class="main-content">
@@ -161,35 +276,39 @@
             <p class="subtitle">Acces datelor și documentele clienților</p>
         
             <div class="button-grid">
-     
-            <a href="https://airtable.com/appIzAO08VV2FW7Ij/shr3hUG6e0yrFSwre" target="_blank" class="dashboard-button">
-            <span class="button-text">Lista clientilor</span>
-        </a>
+                <a href="https://airtable.com/appIzAO08VV2FW7Ij/shr3hUG6e0yrFSwre" target="_blank" class="dashboard-button">
+                    <i class="fas fa-users button-icon"></i>
+                    <span class="button-text">Lista clientilor</span>
+                </a>
 
-        <a href="https://airtable.com/appIzAO08VV2FW7Ij/shreJ19SRWLHE8JLs" target="_blank" class="dashboard-button">
-            <span class="button-text">Documente clientilor</span>
-        </a>
+                <a href="https://airtable.com/appIzAO08VV2FW7Ij/shreJ19SRWLHE8JLs" target="_blank" class="dashboard-button">
+                    <i class="fas fa-folder button-icon"></i>
+                    <span class="button-text">Documente clientilor</span>
+                </a>
 
-        <a href="https://drive.google.com/drive/folders/17D4ipAcxDgGLKwImvK5k-dEt-wawXxxk?usp=sharing" target="_blank" class="dashboard-button">
-            <span class="button-text">Extrase si facturi no SPV</span>
-        </a>
-
+                <a href="https://drive.google.com/drive/folders/17D4ipAcxDgGLKwImvK5k-dEt-wawXxxk?usp=sharing" target="_blank" class="dashboard-button">
+                    <i class="fas fa-file-invoice button-icon"></i>
+                    <span class="button-text">Extrase si facturi no SPV</span>
+                </a>
                 
-        <a href="https://airtable.com/appIzAO08VV2FW7Ij/pagljMGqKtmELB9Uv/form" target="_blank" class="dashboard-button">
+                <a href="https://airtable.com/appIzAO08VV2FW7Ij/pagljMGqKtmELB9Uv/form" target="_blank" class="dashboard-button">
+                    <i class="fas fa-upload button-icon"></i>
                     <span class="button-text">Incarca declarati / balante</span>
-        </a>
+                </a>
                    
                 <a href="https://wa.me/message/DYW56OYO557MP1" target="_blank" class="dashboard-button">
+                    <i class="fab fa-whatsapp button-icon"></i>
                     <span class="button-text">Chat WhatsApp</span>
-        </a>
-
-
+                </a>
             </div>
         </div>
     </main>
 
     <footer class="page-footer">
-        <p>All rights reserved © 2025 Euro Team b2b Services Srl - Union International Center, Bucarest, Romania</p>
+        <div class="footer-content">
+            <div class="footer-copyright">All rights reserved © 2025 Euro Team b2b Services Srl</div>
+            <div class="footer-address">Union International Center, Bucarest, Romania</div>
+        </div>
     </footer>
 
 </body>
